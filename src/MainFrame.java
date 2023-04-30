@@ -25,13 +25,19 @@ public class MainFrame extends JFrame {
     private JButton numberOfContainersButton;
     private JComboBox comboBox2;
     private JTextField putNumberHereTextField;
-
+    private JTextArea textArea2;
+    private JTextArea textArea3;
+    private JLabel logo;
 
 
     public MainFrame(){
         setContentPane(mainPanel);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setSize(1280,720);
+        //setSize(1280,720);
+        setSize(1920,1080);
+        ImageIcon icono = new ImageIcon("logo.png");
+
+        this.setTitle("Hub");
 //        setSize(1920,1200);
         setVisible(true);
         //textArea1.setLineWrap(true);
@@ -44,14 +50,25 @@ public class MainFrame extends JFrame {
 //
 //        textArea1.setText(remi);
         Hub hub = new Hub();
+        Hub hub2 = new Hub();
+        Hub hub3 = new Hub();
 
         pileButton.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource()==pileButton){
-                    int aid = (Integer.parseInt(ID.getText()));
-                    int aweigth=(Integer.parseInt(textWeight.getText()));
+                    Integer aid = 0;
+                    Integer aweigth = 0;
+                    try{
+                         aid = (Integer.parseInt(ID.getText()));
+                        aweigth=(Integer.parseInt(textWeight.getText()));
+                    }catch (NumberFormatException nfe){
+                        JOptionPane.showMessageDialog(null, "Introduce ID and weigth properly.", "Error", JOptionPane.INFORMATION_MESSAGE);
+                        return;
+                    }
+//                    int aid = (Integer.parseInt(ID.getText()));
+//                    int aweigth=(Integer.parseInt(textWeight.getText()));
                     String adescrip=(TextDesc.getText());
                     int apri;
                     if (Button1pri.isSelected()){
@@ -75,13 +92,26 @@ public class MainFrame extends JFrame {
                     if( hub.stack(a))
                         System.out.println("stack successfully");
                     else{
-                        System.out.println("error stacking");
-                        JOptionPane.showMessageDialog(null, "There is no free space to stack", "Error", JOptionPane.INFORMATION_MESSAGE);
+                        if (hub2.stack(a)){
+                            System.out.println("stack successfully");
+                        }
+                        else{
+                            if(hub3.stack(a)){
+                                System.out.println("stack successfully");
+                            }
+                            else{
+                                System.out.println("error stacking");
+                                JOptionPane.showMessageDialog(null, "There is no free space to stack", "Error", JOptionPane.INFORMATION_MESSAGE);
+                            }
+                        }
+
 
                     }
 
 
                     textArea1.setText(hub.toString());
+                    textArea2.setText(hub2.toString());
+                    textArea3.setText(hub3.toString());
                 }
             }
         });
@@ -90,22 +120,25 @@ public class MainFrame extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == numberOfContainersButton){
                     int num = (int)hub.count((String) comboBox2.getSelectedItem());
-                    putNumberHereTextField.setText("" + num);
+                    int num2 = (int)hub2.count((String) comboBox2.getSelectedItem());
+                    int num3 = (int)hub3.count((String) comboBox2.getSelectedItem());
+                    int suma = num + num2 + num3;
+                    putNumberHereTextField.setText("" + suma);
 
-//                    Container[][] c = hub.getContainers();
-//                    for (int i = 0; i < 10; i++) {
-//                        for (int j = 0; j<12; j++){
-//                            if(c[i][j] == null ){
-//                                System.out.print("\u001B[32mE ");
-//                            }
-//                            if(c[i][j] != null)
-//                                System.out.print("\u001B[31mF ");
-//
-//                        }
-//                        System.out.println();
-//
-//                    }
-//                    System.out.println();
+                    Container[][] c = hub.getContainers();
+                    for (int i = 0; i < 10; i++) {
+                        for (int j = 0; j<12; j++){
+                            if(c[i][j] == null ){
+                                System.out.print("\u001B[32mE ");
+                            }
+                            if(c[i][j] != null)
+                                System.out.print("\u001B[31mF ");
+
+                        }
+                        System.out.println();
+
+                    }
+                    System.out.println();
                 }
 
             }
@@ -114,11 +147,46 @@ public class MainFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int column =  Integer.parseInt(textColumnNumber.getText()) - 1;
-                if (hub.unstack(column))
-                    System.out.println("unstack successfully");
-                else
-                    System.out.println( "error unstacking");
-                textArea1.setText(hub.toString());
+                int apri;
+                if (Button1pri.isSelected()){
+                    apri=(1);
+                }
+                else if(Button2pri.isSelected()){
+                    apri=(2);
+                }
+                else{
+                    apri=(3);
+                }
+                switch (apri){
+                    case 1:
+                        if (hub.unstack(column))
+                            System.out.println("unstack successfully");
+                        else
+                            System.out.println( "error unstacking");
+                        textArea1.setText(hub.toString());
+                        textArea2.setText(hub2.toString());
+                        textArea3.setText(hub3.toString());
+                        break;
+                    case 2:
+                        if (hub2.unstack(column))
+                            System.out.println("unstack successfully");
+                        else
+                            System.out.println( "error unstacking");
+                        textArea1.setText(hub.toString());
+                        textArea2.setText(hub2.toString());
+                        textArea3.setText(hub3.toString());
+                        break;
+                    case 3:
+                        if (hub3.unstack(column))
+                            System.out.println("unstack successfully");
+                        else
+                            System.out.println( "error unstacking");
+                        textArea1.setText(hub.toString());
+                        textArea2.setText(hub2.toString());
+                        textArea3.setText(hub3.toString());
+                        break;
+                }
+
 
             }
         });
