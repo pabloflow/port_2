@@ -28,6 +28,7 @@ public class MainFrame extends JFrame {
     private JTextArea textArea2;
     private JTextArea textArea3;
     private JLabel logo;
+    private JButton checkButton;
 
 
     public MainFrame(){
@@ -196,6 +197,12 @@ public class MainFrame extends JFrame {
                 int id =  (Integer.parseInt(ID.getText()));
                 ContainerDescription.setText(hub.searchid(id));
                 //JOptionPane.showMessageDialog(null, "Este es un mensaje de información", "Información", JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
+        checkButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
             }
         });
     }
