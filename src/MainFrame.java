@@ -202,6 +202,31 @@ public class MainFrame extends JFrame {
         checkButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                int apri;
+                if (Button1pri.isSelected()){
+                    apri=(1);
+                }
+                else if(Button2pri.isSelected()){
+                    apri=(2);
+                }
+                else{
+                    apri=(3);
+                }
+                Integer aweigth = 0;
+                aweigth=(Integer.parseInt(textWeight.getText()));
+                switch (apri){
+                    case 1:
+                        JOptionPane.showMessageDialog(null, hub.methodex(aweigth,1), "Check", JOptionPane.INFORMATION_MESSAGE);
+                        break;
+                    case 2:
+
+                        JOptionPane.showMessageDialog(null, hub2.methodex(aweigth,2), "Check", JOptionPane.INFORMATION_MESSAGE);
+                        break;
+                    case 3:
+                        JOptionPane.showMessageDialog(null, hub3.methodex(aweigth,3), "Check", JOptionPane.INFORMATION_MESSAGE);
+
+                        break;
+                }
 
             }
         });

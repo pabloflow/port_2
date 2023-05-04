@@ -122,13 +122,18 @@ public class Hub {
 
     public String methodex(int weight, int hubnum){
         StringBuilder show = new StringBuilder();
+
         for (int i = 0; i < 10; i++){
             for (int j = 0; j < 12; j++){
-                if (containers[i][j].getWeight() <=weight   ){
-                    containers[i][j].setInspected(true);
-                    show.append("Id: "+ containers[i][j].getId() + " Sender: " + containers[i][j].getSenderCompany() + " W: " +  containers[i][j].getWeight() + " Check: true "  );
-                    show.append("\n");
+                if (containers[i][j] != null){
+                    int wei = containers[i][j].getWeight();
+                    if ( wei <= weight   ){
+                        containers[i][j].setInspected(true);
+                        show.append("Id: "+ containers[i][j].getId() + " Sender: " + containers[i][j].getSenderCompany() + " W: " +  containers[i][j].getWeight() + " Check: true "  );
+                        show.append("\n");
+                    }
                 }
+
 
 
             }
